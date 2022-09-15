@@ -1,0 +1,22 @@
+{
+  "name": "express-mesto-gha",
+  "version": "1.0.0",
+  "description": "server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dubyninpavel/express-mesto-gha.git"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "Dubynin Pavel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dubyninpavel/express-mesto-gha/issues"
+  },
+  "homepage": "https://github.com/dubyninpavel/express-mesto-gha#readme"
+}
