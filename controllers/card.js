@@ -18,7 +18,7 @@ const createCard = (req, res) => {
             res.status(200).send({ data: card });
         })
         .catch((err) => {
-            if (!name || !link) {
+            if (err.name === 'ValidationError') {
                 res.status(400).send({ message: 'Переданы некорректные данные в методы создания карточки', ...err });
             } else {
                 res.status(500).send({ message: 'Произошла ошибка', ...err });
@@ -37,7 +37,11 @@ const deleteCard = (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).send({ message: 'Произошла ошибка', ...err });
+            if (err.name === 'CastError') {
+                res.status(400).send({ message: 'Некорректный запрос', ...err });
+            } else {
+                res.status(500).send({ message: 'Произошла ошибка', ...err });
+            }
         });
 };
 

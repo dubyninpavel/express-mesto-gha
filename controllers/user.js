@@ -21,7 +21,11 @@ const getUserById = (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).send({ message: 'Произошла ошибка', ...err });
+            if (err.name === 'CastError') {
+                res.status(400).send({ message: 'Некорректный запрос', ...err });
+            } else {
+                res.status(500).send({ message: 'Произошла ошибка', ...err });
+            }
         });
 };
 
@@ -32,7 +36,7 @@ const createUser = (req, res) => {
             res.status(200).send({ data: user });
         })
         .catch((err) => {
-            if (!name || !about || !avatar) {
+            if (err.name === 'ValidationError') {
                 res.status(400).send({ message: 'Переданы некорректные данные в методы создания пользователя', ...err });
             } else {
                 res.status(500).send({ message: 'Произошла ошибка', ...err });
@@ -45,6 +49,7 @@ const updateDataUser = (req, res) => {
     User.findByIdAndUpdate(
         { _id: req.user._id },
         { $set: { name, about } },
+        { returnDocument: 'after' },
     )
         .then((user) => {
             if (!name || !about) {
@@ -65,6 +70,7 @@ const updateAvatarUser = (req, res) => {
     User.findByIdAndUpdate(
         { _id: req.user._id },
         { $set: { avatar } },
+        { returnDocument: 'after' },
     )
         .then((user) => {
             if (!avatar) {
