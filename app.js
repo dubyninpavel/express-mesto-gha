@@ -6,6 +6,8 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(express.json());
+
 app.use('/', (req, res, next) => {
     req.user = {
         _id: '63296c4f3b066e1eb4b4c133',
@@ -15,15 +17,8 @@ app.use('/', (req, res, next) => {
 
 app.use('/', routes);
 
-app.all('*', () => {
-    throw new Error('Bad request');
-});
-
-app.use((err, req, res, next) => {
-    if (err.message === 'Bad request') {
-        res.status(404).send({ message: 'Данный url не найден' });
-    }
-    next();
+app.all('*', (req, res) => {
+    res.status(404).send({ message: 'Данный url не найден' })
 });
 
 async function startTheServer() {
