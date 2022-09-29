@@ -62,7 +62,7 @@ const createUser = (req, res, next) => {
         name, about, avatar, email, password: hashedPassword,
       })
         .then((user) => {
-          res.send({ data: user });
+          res.send({ data: user.hiddenPassword() });
         })
         .catch((err) => {
           if (err.name === 'ValidationError') {
@@ -100,14 +100,14 @@ const loginUser = (req, res, next) => {
               sameSite: true,
             });
 
-            res.send({ data: user });
+            res.send({ data: user.hiddenPassword() });
           } else {
             next(new UnauthorizedError('Неправльный email или пароль'));
           }
         });
     })
     .catch(() => {
-      next(new NotFoundError('Пользователь с такими данными не найден'));
+      next(new UnauthorizedError('Пользователь с такими данными не найден'));
     });
 };
 
