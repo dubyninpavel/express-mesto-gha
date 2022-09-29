@@ -1,5 +1,11 @@
 const userRoutes = require('express').Router();
-const { celebrate, Joi, errors } = require('celebrate');
+const { errors } = require('celebrate');
+
+const {
+  validateUpdateDataUser,
+  validateUpdateAvatarUser,
+  validateGetUserById,
+} = require('../validator/validator');
 
 const {
   getAllUsers,
@@ -10,23 +16,10 @@ const {
 } = require('../controllers/user');
 
 userRoutes.get('/', getAllUsers);
-userRoutes.patch('/me', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
-  }),
-}), updateDataUser);
+userRoutes.patch('/me', validateUpdateDataUser, updateDataUser);
 userRoutes.get('/me', getMyUserData);
-userRoutes.patch('/me/avatar', celebrate({
-  body: Joi.object().keys({
-    avatar: Joi.string().required().pattern(/https?:\/\//),
-  }),
-}), updateAvatarUser);
-userRoutes.get('/:userId', celebrate({
-  params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
-  }),
-}), getUserById);
+userRoutes.patch('/me/avatar', validateUpdateAvatarUser, updateAvatarUser);
+userRoutes.get('/:userId', validateGetUserById, getUserById);
 
 userRoutes.use(errors());
 
