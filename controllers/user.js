@@ -91,7 +91,7 @@ const loginUser = (req, res, next) => {
               {
                 _id: user._id,
               },
-              process.env.JWT_SECRET,
+              'key',
             );
 
             res.cookie('jwt', token, {
