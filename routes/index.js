@@ -8,7 +8,7 @@ const { createUser, loginUser } = require('../controllers/user');
 
 routes.post('/signin', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().email(),
+    email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), loginUser);
