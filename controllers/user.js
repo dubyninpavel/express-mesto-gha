@@ -100,7 +100,7 @@ const loginUser = (req, res, next) => {
               sameSite: true,
             });
 
-            res.send({ data: user });
+            res.send({ data: user.hiddenPassword() });
           } else {
             next(new UnauthorizedError('Неправльный email или пароль'));
           }

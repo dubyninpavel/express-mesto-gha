@@ -40,7 +40,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.hiddenPassword = function () {
   const user = this.toObject();
-  console.log(user);
   delete user.password;
   return user;
 };
