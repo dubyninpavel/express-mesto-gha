@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { JWT_SECRET } = require('../config/config');
 const NotFoundError = require('../middlewares/errors/notFoundError');
 const ConflictError = require('../middlewares/errors/conflictError');
 const BadRequestError = require('../middlewares/errors/badRequestError');
@@ -91,7 +92,7 @@ const loginUser = (req, res, next) => {
               {
                 _id: user._id,
               },
-              'Key',
+              JWT_SECRET,
               {
                 expiresIn: '7d',
               },

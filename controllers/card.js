@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../middlewares/errors/notFoundError');
 const BadRequestError = require('../middlewares/errors/badRequestError');
+const ForbiddenError = require('../middlewares/errors/forbiddenError');
 
 const getAllCards = (req, res, next) => {
   Card.find({})
@@ -39,7 +40,7 @@ const deleteCard = (req, res, next) => {
   })
     .then((card) => {
       if (!card) {
-        throw new NotFoundError('Карточка по указанному id не найдена или у вас не прав на ее удаление');
+        throw new ForbiddenError('У вас не прав на ее удаление');
       }
       res.send({ message: 'Данные удалены', card });
     })

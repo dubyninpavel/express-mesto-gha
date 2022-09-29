@@ -19,10 +19,14 @@ userRoutes.patch('/me', celebrate({
 userRoutes.get('/me', getMyUserData);
 userRoutes.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required(),
+    avatar: Joi.string().required().pattern(/https?:\/\//),
   }),
 }), updateAvatarUser);
-userRoutes.get('/:userId', getUserById);
+userRoutes.get('/:userId', celebrate({
+  params: Joi.object().keys({
+    userId: Joi.string().alphanum().length(24),
+  }),
+}), getUserById);
 
 userRoutes.use(errors());
 
