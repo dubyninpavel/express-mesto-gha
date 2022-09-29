@@ -91,15 +91,16 @@ const loginUser = (req, res, next) => {
               {
                 _id: user._id,
               },
-              'key',
+              'Key',
+              {
+                expiresIn: '7d',
+              },
             );
-
             res.cookie('jwt', token, {
               maxAge: 3600000,
               httpOnly: true,
               sameSite: true,
             });
-
             res.send({ data: user.hiddenPassword() });
           } else {
             next(new UnauthorizedError('Неправльный email или пароль'));
