@@ -2,6 +2,7 @@ require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/error');
 const NotFoundError = require('./middlewares/errors/notFoundError');
@@ -19,6 +20,8 @@ app.all('*', (req, res, next) => {
   next(new NotFoundError('Текущий url не найден'));
 });
 
+app.use(errors());
+
 app.use(errorHandler);
 
 async function startTheServer() {
@@ -28,6 +31,7 @@ async function startTheServer() {
   });
 
   await app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Сервер запущен на ${PORT} порту`);
   });
 }

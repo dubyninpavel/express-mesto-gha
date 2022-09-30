@@ -1,52 +1,41 @@
+/* eslint-disable no-useless-escape */
 const { celebrate, Joi } = require('celebrate');
 
 const validateCreateCard = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    link: Joi.string().required().pattern(/https?:\/\//),
+    name: Joi.string().min(2).max(30).required(),
+    link: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/).required(),
   }),
 });
 
-const validateDeleteCard = celebrate({
+const validateHandlerCard = celebrate({
   params: Joi.object().keys({
-    cardId: Joi.string().alphanum().length(24),
-  }),
-});
-
-const validateSetLikeCard = celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().alphanum().length(24),
-  }),
-});
-
-const validateDeleteLikeCard = celebrate({
-  params: Joi.object().keys({
-    cardId: Joi.string().alphanum().length(24),
+    cardId: Joi.string().length(24).hex(),
   }),
 });
 
 const validateUpdateDataUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    about: Joi.string().required().min(2).max(30),
+    name: Joi.string().min(2).max(30).required(),
+    about: Joi.string().min(2).max(30).required(),
   }),
 });
 
 const validateUpdateAvatarUser = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().required().pattern(/https?:\/\//),
+    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/).required(),
   }),
 });
 
 const validateGetUserById = celebrate({
   params: Joi.object().keys({
-    userId: Joi.string().alphanum().length(24),
+    userId: Joi.string().length(24).hex(),
   }),
 });
 
 const validateLoginUser = celebrate({
   body: Joi.object().keys({
-    email: Joi.string().required().email(),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 });
@@ -55,17 +44,15 @@ const validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/https?:\/\//),
-    email: Joi.string().required().email(),
+    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/),
+    email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 });
 
 module.exports = {
   validateCreateCard,
-  validateDeleteCard,
-  validateSetLikeCard,
-  validateDeleteLikeCard,
+  validateHandlerCard,
   validateUpdateDataUser,
   validateUpdateAvatarUser,
   validateGetUserById,

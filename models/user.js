@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable no-useless-escape */
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
 
@@ -5,22 +7,19 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     default: 'Жак-Ив Кусто',
-    require: true,
     minlength: 2,
     maxlength: 30,
   },
   about: {
     type: String,
     default: 'Исследователь',
-    require: true,
     minlength: 2,
     maxlength: 30,
   },
   avatar: {
     type: String,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
-    require: true,
-    match: [/https?:\/\//, 'Ошибка url'],
+    match: [/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/, 'Ошибка url'],
   },
   email: {
     type: String,

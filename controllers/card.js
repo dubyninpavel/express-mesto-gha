@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const Card = require('../models/card');
 const NotFoundError = require('../middlewares/errors/notFoundError');
 const BadRequestError = require('../middlewares/errors/badRequestError');
@@ -16,16 +17,14 @@ const getAllCards = (req, res, next) => {
 const createCard = (req, res, next) => {
   const owner = req.user._id;
   const { name, link } = req.body;
-  if (!name || !link) {
-    throw new BadRequestError('Передайте корекктные данные name и link');
-  }
+
   Card.create({ name, link, owner })
     .then((card) => {
       res.send({ data: card });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные в методы создания карточки'));
+        return next(new BadRequestError('Переданы некорректные данные в методы создания карточки'));
       }
       next(err);
     });
@@ -54,7 +53,7 @@ const deleteCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Некорректный запрос'));
+        return next(new BadRequestError('Некорректный запрос'));
       }
       next(err);
     });
@@ -76,7 +75,7 @@ const setLikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
+        return next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
       }
       next(err);
     });
@@ -98,7 +97,7 @@ const deleteLikeCard = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
+        return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
       }
       next(err);
     });

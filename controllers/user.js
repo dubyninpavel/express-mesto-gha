@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -54,9 +55,6 @@ const createUser = (req, res, next) => {
   const {
     name, about, avatar, email, password,
   } = req.body;
-  if (!email || !password) {
-    throw new BadRequestError('Передайте корекктные данные email и password');
-  }
   bcrypt.hash(password, 10)
     .then((hashedPassword) => {
       User.create({
@@ -113,11 +111,12 @@ const loginUser = (req, res, next) => {
     });
 };
 
+const logOutUser = (req, res) => {
+  res.clearCookie('jwt').send({ message: 'Вы вышли из аккаунта' });
+};
+
 const updateDataUser = (req, res, next) => {
   const { name, about } = req.body;
-  if (!name && !about) {
-    throw new BadRequestError('Отсутствуют параметры для обновления');
-  }
   User.findByIdAndUpdate(
     { _id: req.user._id },
     { $set: { name, about } },
@@ -134,7 +133,7 @@ const updateDataUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные в методы создания пользователя'));
+        return next(new BadRequestError('Переданы некорректные данные в методы создания пользователя'));
       }
       next(err);
     });
@@ -142,9 +141,6 @@ const updateDataUser = (req, res, next) => {
 
 const updateAvatarUser = (req, res, next) => {
   const { avatar } = req.body;
-  if (!avatar) {
-    throw new BadRequestError('Отсутствуют параметры для обновления');
-  }
   User.findByIdAndUpdate(
     { _id: req.user._id },
     { $set: { avatar } },
@@ -161,7 +157,7 @@ const updateAvatarUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные в методы создания пользователя'));
+        return next(new BadRequestError('Переданы некорректные данные в методы создания пользователя'));
       }
       next(err);
     });
@@ -175,4 +171,5 @@ module.exports = {
   updateDataUser,
   updateAvatarUser,
   loginUser,
+  logOutUser,
 };

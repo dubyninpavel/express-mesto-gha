@@ -1,10 +1,8 @@
 const cardRoutes = require('express').Router();
-const { errors } = require('celebrate');
+
 const {
   validateCreateCard,
-  validateDeleteCard,
-  validateSetLikeCard,
-  validateDeleteLikeCard,
+  validateHandlerCard,
 } = require('../validator/validator');
 
 const {
@@ -17,10 +15,8 @@ const {
 
 cardRoutes.get('/', getAllCards);
 cardRoutes.post('/', validateCreateCard, createCard);
-cardRoutes.delete('/:cardId', validateDeleteCard, deleteCard);
-cardRoutes.put('/:cardId/likes', validateSetLikeCard, setLikeCard);
-cardRoutes.delete('/:cardId/likes', validateDeleteLikeCard, deleteLikeCard);
-
-cardRoutes.use(errors());
+cardRoutes.delete('/:cardId', validateHandlerCard, deleteCard);
+cardRoutes.put('/:cardId/likes', validateHandlerCard, setLikeCard);
+cardRoutes.delete('/:cardId/likes', validateHandlerCard, deleteLikeCard);
 
 module.exports = cardRoutes;

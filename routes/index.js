@@ -1,10 +1,9 @@
 const routes = require('express').Router();
-const { errors } = require('celebrate');
 const userRoutes = require('./user');
 const cardRoutes = require('./card');
 const auth = require('../middlewares/auth');
 
-const { createUser, loginUser } = require('../controllers/user');
+const { createUser, loginUser, logOutUser } = require('../controllers/user');
 
 const {
   validateLoginUser,
@@ -16,9 +15,9 @@ routes.post('/signup', validateCreateUser, createUser);
 
 routes.use(auth);
 
+routes.get('/signout', logOutUser);
+
 routes.use('/users', userRoutes);
 routes.use('/cards', cardRoutes);
-
-routes.use(errors());
 
 module.exports = routes;

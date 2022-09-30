@@ -1,5 +1,4 @@
 const userRoutes = require('express').Router();
-const { errors } = require('celebrate');
 
 const {
   validateUpdateDataUser,
@@ -20,7 +19,5 @@ userRoutes.patch('/me', validateUpdateDataUser, updateDataUser);
 userRoutes.get('/me', getMyUserData);
 userRoutes.patch('/me/avatar', validateUpdateAvatarUser, updateAvatarUser);
 userRoutes.get('/:userId', validateGetUserById, getUserById);
-
-userRoutes.use(errors());
 
 module.exports = userRoutes;
