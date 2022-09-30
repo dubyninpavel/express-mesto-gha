@@ -4,7 +4,7 @@ const { celebrate, Joi } = require('celebrate');
 const validateCreateCard = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
-    link: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/).required(),
+    link: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,./]+)(\.)([-a-z0-9+&@#\%=~_|$?!:,./]+)/).required(),
   }),
 });
 
@@ -23,7 +23,7 @@ const validateUpdateDataUser = celebrate({
 
 const validateUpdateAvatarUser = celebrate({
   body: Joi.object().keys({
-    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/).required(),
+    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,./]+)(\.)([-a-z0-9+&@#\%=~_|$?!:,./]+)/).required(),
   }),
 });
 
@@ -44,7 +44,7 @@ const validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,.]*)(\.[ru|com]+)([-a-z0-9+&@#\/%=~_|$?!:,.]+)/),
+    avatar: Joi.string().pattern(/(https?:\/\/)([-a-z0-9+&@#\%=~_|$?!:,./]+)(\.)([-a-z0-9+&@#\%=~_|$?!:,./]+)/),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
