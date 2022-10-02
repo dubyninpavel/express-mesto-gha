@@ -17,13 +17,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 //app.use(cors);
-app.use(requestLogger);
+//app.use(requestLogger);
 
-app.get('/crash-test', () => {
+/*app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-});
+});*/
 
 app.use('/', routes);
 
@@ -31,7 +31,7 @@ app.all('*', (req, res, next) => {
   next(new NotFoundError('Текущий url не найден'));
 });
 
-app.use(errorLogger);
+//app.use(errorLogger);
 app.use(errors());
 
 app.use(errorHandler);
