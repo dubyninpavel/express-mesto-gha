@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable consistent-return */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -95,6 +96,7 @@ const loginUser = (req, res, next) => {
                 expiresIn: '7d',
               },
             );
+            //res.send({ jwt: token });
             res.cookie('jwt', token, {
               maxAge: 3600000,
               httpOnly: true,
