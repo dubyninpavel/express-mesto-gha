@@ -96,12 +96,12 @@ const loginUser = (req, res, next) => {
                 expiresIn: '7d',
               },
             );
-            //res.send({ jwt: token });
-            res.cookie('jwt', token, {
+            res.send({ token });
+            /*res.cookie('jwt', token, {
               maxAge: 3600000,
               httpOnly: true,
               sameSite: true,
-            });
+            });*/
             res.send({ data: user.hiddenPassword() });
           } else {
             next(new UnauthorizedError('Неправльный email или пароль'));
