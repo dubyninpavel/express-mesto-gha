@@ -3,11 +3,27 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/error');
 const NotFoundError = require('./middlewares/errors/notFoundError');
-const { cors } = require('./middlewares/cors');
+//const { cors } = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const whitelist = [
+  'https://praktikum.tk',
+  'http://praktikum.tk',
+  'https://localhost:3000',
+  'http://localhost:3000',
+  'https://project.mesto.russia.nomoredomains.icu/',
+  'http://project.mesto.russia.nomoredomains.icu/',
+  'https://project.mesto.russia.nomoredomains.icu',
+  'http://project.mesto.russia.nomoredomains.icu',
+  'https://api.project.mesto.russia.nomoredomains.icu/',
+  'http://api.project.mesto.russia.nomoredomains.icu/',
+  'https://api.project.mesto.russia.nomoredomains.icu',
+  'http://api.project.mesto.russia.nomoredomains.icu',
+];
 
 const { PORT = 3000 } = process.env;
 
@@ -16,7 +32,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cors);
+app.use(cors());
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
