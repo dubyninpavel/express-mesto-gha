@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable spaced-comment */
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const express = require('express');
@@ -9,21 +11,6 @@ const errorHandler = require('./middlewares/error');
 const NotFoundError = require('./middlewares/errors/notFoundError');
 //const { cors } = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const whitelist = [
-  'https://praktikum.tk',
-  'http://praktikum.tk',
-  'https://localhost:3000',
-  'http://localhost:3000',
-  'https://project.mesto.russia.nomoredomains.icu/',
-  'http://project.mesto.russia.nomoredomains.icu/',
-  'https://project.mesto.russia.nomoredomains.icu',
-  'http://project.mesto.russia.nomoredomains.icu',
-  'https://api.project.mesto.russia.nomoredomains.icu/',
-  'http://api.project.mesto.russia.nomoredomains.icu/',
-  'https://api.project.mesto.russia.nomoredomains.icu',
-  'http://api.project.mesto.russia.nomoredomains.icu',
-];
 
 const { PORT = 3000 } = process.env;
 
@@ -59,7 +46,6 @@ async function startTheServer() {
   });
 
   await app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
     console.log(`Сервер запущен на ${PORT} порту`);
   });
 }
