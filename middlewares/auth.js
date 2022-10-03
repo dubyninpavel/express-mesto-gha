@@ -8,14 +8,14 @@ const auth = (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    throw new UnauthorizedError('Необходимо авторизироваться');
+    return next(new UnauthorizedError('Необходимо авторизироваться'));
   }
 
   const token = authorization.replace('Bearer ', '');
 
   //const token = req.cookies.jwt;
   if (!token) {
-    next(new UnauthorizedError('Необходимо авторизироваться'));
+    return next(new UnauthorizedError('Необходимо авторизироваться'));
   }
   let payload;
   try {
@@ -24,7 +24,7 @@ const auth = (req, res, next) => {
     next(new UnauthorizedError('Необходимо авторизизация'));
   }
   req.user = payload;
-  next();
+  return next();
 };
 
 module.exports = auth;
