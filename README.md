@@ -22,7 +22,7 @@ Backend часть приложения по размещению фотогра
 ## Ссылка на Github:
 * [Проект: Mesto](https://github.com/dubyninpavel/express-mesto-gha)
 
-## Ссылка на запрос:
+## IP сервера:
 Запрос к серверу:
 * [Проект: Mesto](https://api.project.mesto.russia.nomoredomains.icu)
 * IP: 178.154.220.64
